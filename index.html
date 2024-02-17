@@ -91,7 +91,7 @@
             let scheduleContent = '';
             
             // 쉬는 날 (일요일 = 0, 토요일 = 6)
-            if (dayOfWeek === 0) {
+            if (dayOfWeek === 0 || dayOfWeek === 6) {
                 message = '오늘은 쉬는 날입니다.';
             } else {
                 // 출근 시간 (8시 30분 하루 일정 시작)
