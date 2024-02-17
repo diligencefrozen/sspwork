@@ -37,8 +37,16 @@
             background-color: #f1f1f1;
             border-radius: 4px;
         }
+        #clock {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
         h2, p {
             text-align: center;
+        }
+        #client-ip {
+            color: #bbb2e9;
+            font-size: 1em;
         }
     </style>
 </head>
@@ -49,6 +57,16 @@
     <div id="schedule"></div>
 
     <script>
+        
+        // IP 정보 가져오기
+        const se = document.createElement('script');
+        se.src = 'https://ipinfo.io?callback=callback';
+        document.body.appendChild(se);
+        document.body.removeChild(se);
+
+        function callback(data) {
+            document.getElementById('client-ip').textContent = data.ip + ' 님, 방문하신 걸 환영합니다.';
+        }
         // 시간과 일정 업데이트 함수
         function updateClockAndSchedule() {
             const now = new Date();
