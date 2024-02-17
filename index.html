@@ -84,22 +84,28 @@
         // 일정 업데이트 기능
         function updateSchedule() {
             const now = new Date();
+            const dayOfWeek = now.getDay(); // 현재 요일을 가져옵니다 (0: 일요일, 1: 월요일, ..., 6: 토요일)
             const hours = now.getHours();
             let message = '';
-
-            if (hours >= 9 && hours < 10) {
-                message = '아침 9시부터 10시까지: 청소, 커피 타기';
-            } else if (hours >= 12 && hours < 13) {
-                message = '점심 12시부터 13시까지: 점심식사 및 휴식';
-            } else if (hours >= 17) {
-                message = '퇴근할 시간';
+            
+            // 토요일(6)과 일요일(0)에는 "쉬는 날" 메시지를 표시합니다.
+            if (dayOfWeek === 0 || dayOfWeek === 6) {
+                message = '오늘은 쉬는 날입니다.';
             } else {
-                message = '현재 일정이 없습니다.';
+                // 평일 일정
+                if (hours >= 9 && hours < 10) {
+                    message = '아침 9시부터 10시까지: 청소, 커피 타기';
+                } else if (hours >= 12 && hours < 13) {
+                    message = '점심 12시부터 13시까지: 점심식사 및 휴식';
+                } else if (hours >= 14) {
+                    message = '퇴근할 시간';
+                } else {
+                    message = '현재 일정이 없습니다.';
+                }
             }
-
             document.getElementById('schedule').innerText = message;
         }
-
+        
         updateSchedule();
         setInterval(updateSchedule, 60000); // 1분마다 일정 업데이트
     </script>
