@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="cp949">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="description" content="남양주시청에 근무하는 사회복무요원의 해야 할 일 목록을 간단하게 확인할 수 있습니다.">
+    <meta name="author" content="Diligencefrozen">
     <title>남양주시청에 근무하는 사회복무요원의 해야 할 일</title>
     <style>
         body {
@@ -90,11 +92,37 @@
                 if (hours === 11 && minutes >= 30 || hours === 13 && minutes < 00) {
                     message = '점심식사 및 휴식';
                 }
-                // 오후 업무 (13시 00분부터)
-                if (hours === 13 && minutes >= 00 || hours > 12 && hours < 17) {
+                // 오후 업무 -1 (13시 00분부터 14시 50분까지)
+                if (hours === 13 && minutes >= 00 || hours === 14 && minutes < 50) {
+                    scheduleContent += '<li class="schedule-item">사무용품 및 기타 필요한 물품 확인 후 담당 주무관님께 말씀드리기</li>';
+                    scheduleContent += '<li class="schedule-item">(문구용품(고무줄), 우편봉투, 쓰레기봉투, 세단기봉투, 고지서, A4, 프린터 드럼, 토너, 문서보존박스, 문서보존표지, 번호표용지, 물티슈, 휴지, 종이컵) </li>';
+                    scheduleContent += '<li class="schedule-item">드럼은 1층서고에만 있고, 토너는 3층서고, 1층서고에 있으니 3층서고에 없으면 1층서고 확인(1층서고 열쇠 취득세관리팀 팀장님 자리 옆에 있음)</li>';
                     scheduleContent += '<li class="schedule-item">오후 업무 진행</li>';
                     // 이하 동일한 방식으로 다른 일정 항목 추가...
                 }
+                // 오후 업무 -2 (15시 00분부터 16시 00분까지)
+                if (hours === 15 && minutes >= 00 || hours === 16 && minutes < 00) {
+                    scheduleContent += '<li class="schedule-item">등기 우편과 일반 우편을 다산2동우편취급국으로 가서 부치기</li>';
+                    scheduleContent += '<li class="schedule-item">a. 발송우편-등기우편 -> 발송요청 -> 검수 -> 등기번호등록 -> 발송정보 일괄변경 -> 환부불능 -> 우체국발송(15:28에 수행) -> 다산2동우편취급국</li>';
+                    scheduleContent += '<li class="schedule-item">b. 고지서-지방세 -> 검수 -> 등기번호등록 -> 발송정보 일괄변경 -> 우체국발송(15:28에 수행) -> 다산2동우편취급국</li>';
+                    scheduleContent += '<li class="schedule-item">c. 총 수량을 요금후납우편물발송표에 기록</li>';
+                    scheduleContent += '<li class="schedule-item">일반 우편을 처리할 때는</li>';
+                    scheduleContent += '<li class="schedule-item">a. 소봉투와 대봉투 분류하여 고무줄로 봉인 -> 소봉투 묶음과 대봉투 묶음 각각에 등기/일반 구분을 위한 포스트잇(내용의 예: 일반 7건 or 일반 5, etc) 부착</li>';
+                    scheduleContent += '<li class="schedule-item">b. 총 수량을 요금후납우편물발송표에 기록</li>';
+                    scheduleContent += '<li class="schedule-item">★요금후납우편물발송표 2장 작성</li>';
+                    scheduleContent += '<li class="schedule-item">★등기우편, 일반우편 구분 확실히 하기</li>';
+                    scheduleContent += '<li class="schedule-item">★등기우편은 우편모아 등록순서대로 정리해서 가져가기(일반우편은 순서 상관 없음)</li>';
+                    scheduleContent += '<li class="schedule-item">★요금후납우편물발송표 없으면 프린트하여 담당주사님께 직인 찍어달라고 부탁드리기</li>';
+                    // 이하 동일한 방식으로 다른 일정 항목 추가...
+                }      
+                // 오후 업무 -3 (16시 45분부터 17시 30분까지)
+                if (hours === 16 && minutes >= 45 || hours === 17 && minutes < 30) {
+                    scheduleContent += '<li class="schedule-item">사무실 정리 마무리</li>';
+                    scheduleContent += '<li class="schedule-item">민원대 정리 (번호표 수거 및 바닥 쓰레기 줍기)</li>';
+                    scheduleContent += '<li class="schedule-item">일반쓰레기, 종이류, 세단기 분리수거하기</li>';
+                    scheduleContent += '<li class="schedule-item">★우편, 사송 통 3개 39번 사물함에 넣기</li>';
+                    // 이하 동일한 방식으로 다른 일정 항목 추가...
+                }                   
                 // 퇴근 시간 (17시 30분 하루 일정 종료)
                 if (hours === 17 && minutes >= 30) {
                     message = '퇴근할 시간';
