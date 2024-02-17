@@ -62,17 +62,20 @@
 
             updateSchedule(now);
         }
-
+        
         function updateSchedule(now) {
             const dayOfWeek = now.getDay();
             const hours = now.getHours();
+            const minutes = now.getMinutes();
             let message = '';
             let scheduleContent = '';
-
+            
+            // 쉬는 날 (일요일 = 0, 토요일 = 6)
             if (dayOfWeek === 0) {
                 message = '오늘은 쉬는 날입니다.';
             } else {
-                if (hours >= 8 && hours < 10) {
+                // 출근 시간 (8시 30분 하루 일정 시작)
+                if (hours === 8 && minutes >= 30 || hours === 09 && minutes < 30) {                    
                     scheduleContent += '<li class="schedule-item">1층 우편함에서 신문지와 우편 들고오기</li>';
                     scheduleContent += '<li class="schedule-item">파쇄기 쓰레기통 및 사무실 쓰레기통 비우기</li>';
                     scheduleContent += '<li class="schedule-item">커피머신 청소 및 쓰레기 봉지 버리고 오기</li>';
@@ -82,12 +85,19 @@
                     scheduleContent += '<li class="schedule-item">2층 취득세과 수령함에 있는 사송우편 가져오기</li>';
                     scheduleContent += '<li class="schedule-item">부족한 고지서 및 A4 용지 가져다 놓기 (재고는 1층 창고에 존재함)</li>';
                     // 이하 동일한 방식으로 다른 일정 항목 추가...
-                } else if (hours >= 12 && hours < 13) {
-                    message = '점심시간: 점심식사 및 휴식';
-                } else if (hours >= 17) {
+                }
+                // 점심 시간 (11시 30분부터 13시 00분까지)
+                if (hours === 11 && minutes >= 30 || hours === 13 && minutes < 00) {
+                    message = '점심식사 및 휴식';
+                }
+                // 오후 업무 (13시 00분부터)
+                if (hours === 13 && minutes >= 00 || hours > 12 && hours < 17) {
+                    scheduleContent += '<li class="schedule-item">오후 업무 진행</li>';
+                    // 이하 동일한 방식으로 다른 일정 항목 추가...
+                }
+                // 퇴근 시간 (17시 30분 하루 일정 종료)
+                if (hours === 17 && minutes >= 30) {
                     message = '퇴근할 시간';
-                } else {
-                    message = '현재 일정이 없습니다.';
                 }
             }
             document.getElementById('schedule').innerHTML = scheduleContent ? `<ul>${scheduleContent}</ul>` : message;
