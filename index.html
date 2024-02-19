@@ -51,7 +51,7 @@
     </style>
 </head>
 <body>
-    <h1 id="title">해야 할 일 목록</h1>
+    <h1 id="title">Schedule</h1>
     <h2 id="clock"></h2>
     <p id="client-ip"></p>
     <div id="schedule"></div>
@@ -99,6 +99,9 @@
                     scheduleContent += '<li class="schedule-item">1층 우편함에서 신문지와 우편 들고오기</li>';
                     scheduleContent += '<li class="schedule-item">파쇄기 쓰레기통 및 사무실 쓰레기통 비우기</li>';
                     scheduleContent += '<li class="schedule-item">커피머신 청소 및 쓰레기 봉지 버리고 오기</li>';
+                    scheduleContent += '<li class="schedule-item">40번 사물함 - 열쇠 11번 (부동산팀 쪽 서랍장 확인 ㄱ)</li>';
+                    scheduleContent += '<li class="schedule-item">우편 담는 상자 꺼내기</li>';
+                    scheduleContent += '<li class="schedule-item">대걸레질(선택)</li>';
                     scheduleContent += '<li class="schedule-item">프린터기 용지 채우기 (민원인용 프린터 및 실내 공용프린터)</li>';
                     scheduleContent += '<li class="schedule-item">부족한 고지서 및 A4 용지 가져다 놓기 (재고는 1층 창고에 존재함)</li>';
                     scheduleContent += '<li class="schedule-item">사송 우편 2층 사송우편 발송함에 넣어두기</li>';
@@ -106,6 +109,11 @@
                     scheduleContent += '<li class="schedule-item">부족한 고지서 및 A4 용지 가져다 놓기 (재고는 1층 창고에 존재함)</li>';
                     // 이하 동일한 방식으로 다른 일정 항목 추가...
                 }
+                // 출근 시간 (11시 00분)
+                if (hours === 11 && minutes >= 00 || hours === 11 && minutes < 29) {                    
+                    scheduleContent += '<li class="schedule-item">11시에 발송된 우편 전달 및 서류에 담당 공무원 이름으로 사인 받거나 (자리에 없을 시) 본인이 직접 사인하기 (우편물 수령 확인 대장)</li>';
+                    // 이하 동일한 방식으로 다른 일정 항목 추가...
+                }                
                 // 점심 시간 (11시 30분부터 13시 00분까지)
                 if (hours === 11 && minutes >= 30 || hours === 13 && minutes < 00) {
                     message = '점심식사 및 휴식';
