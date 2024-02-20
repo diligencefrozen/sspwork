@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="cp949">
+    <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="description" content="남양주시청에 근무하는 사회복무요원의 해야 할 일 목록을 간단하게 확인할 수 있습니다.">
@@ -26,8 +26,10 @@
             border: 1px solid #ddd;
             border-radius: 8px;
             width: 80%;
+            max-width: 500px; /* 최대 너비 설정 */
             background-color: #fff;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow-y: auto; 
         }
         #title {
             display: block; /* 항상 보이도록 설정 */
@@ -50,7 +52,7 @@
             text-align: center;
         }
         #client-ip {
-            color: #bbb2e9;
+            color: #999999;
             font-size: 1em;
         }
     </style>
