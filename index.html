@@ -29,6 +29,11 @@
             background-color: #fff;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
+        #title {
+            display: block; /* 항상 보이도록 설정 */
+            width: 100%; /* 전체 너비를 차지하도록 설정 */
+            text-align: center; /* 중앙 정렬 */
+        }        
         .schedule-item {
             margin: 5px 0;
             padding: 10px;
@@ -155,6 +160,11 @@
                     message = '퇴근할 시간';
                 }
             }
+            
+        if (!scheduleContent && !message) { // scheduleContent와 message 모두 비어있는 경우
+            message = "일정이 없습니다. 편히 쉬세요.";
+        }
+            
             document.getElementById('schedule').innerHTML = scheduleContent ? `<ul>${scheduleContent}</ul>` : message;
         }
 
