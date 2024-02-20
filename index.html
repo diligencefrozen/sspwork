@@ -26,11 +26,17 @@
             border: 1px solid #ddd;
             border-radius: 8px;
             width: 80%;
-            max-width: 500px; /* 최대 너비 설정 */
+            max-width: 500px; /* 모바일 화면에서 최대 너비 설정 */
             background-color: #fff;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             overflow-y: auto; 
         }
+        /* 데스크탑 화면에서 너비 조정 */
+        @media (min-width: 768px) {
+            #schedule {
+                max-width: 2000px; /* 데스크탑 화면에서는 최대 너비를 더 크게 설정 */
+            }
+        }        
         #title {
             display: block; /* 항상 보이도록 설정 */
             width: 100%; /* 전체 너비를 차지하도록 설정 */
