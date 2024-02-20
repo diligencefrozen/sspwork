@@ -100,7 +100,7 @@
                 message = '오늘은 쉬는 날입니다.';
             } else {
                 // 출근 시간 (8시 30분 하루 일정 시작)
-                if ((hours > 08 || (hours === 08 && minutes >= 30)) && (hours < 09 || (hours === 09 && minutes < 30))) {                   
+                if ((hours > 08 || (hours === 08 && minutes >= 30)) && (hours < 19 || (hours === 19 && minutes < 30))) {                   
                     scheduleContent += '<li class="schedule-item">1층 우편함에서 신문지와 우편 들고오기</li>';
                     scheduleContent += '<li class="schedule-item">파쇄기 쓰레기통 및 사무실 쓰레기통 비우기</li>';
                     scheduleContent += '<li class="schedule-item">커피머신 청소 및 쓰레기 봉지 버리고 오기</li>';
