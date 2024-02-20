@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="google-site-verification" content="c4eTxK6D1wFIOq01h8LLX02-f44HSO5gXqCsqGhr8AE" />
-    
     <meta name="description" content="남양주시청에 근무하는 사회복무요원의 해야 할 일 목록을 간단하게 확인할 수 있습니다.">
     <meta name="author" content="Diligencefrozen">
     <title>남양주시청에 근무하는 사회복무요원의 해야 할 일</title>
@@ -92,7 +90,16 @@
                 timeZone: 'Asia/Seoul',
                 hour12: false
             };
-            const koreaTime = new Intl.DateTimeFormat('ko-KR', koreaTimeOptions).format(now);
+            
+            // `koreaTime`을 `let`으로 선언하여 값을 변경할 수 있도록 함
+            let koreaTime = new Intl.DateTimeFormat('ko-KR', koreaTimeOptions).format(now);
+
+            // 0시를 '00시'로 표시하기 위한 조건문 추가
+            const hours = now.getHours();
+            if (hours === 0) {
+                koreaTime = koreaTime.replace(/^24/, '00'); // '24'로 시작하는 문자열을 '00'으로 교체
+            }
+
             document.getElementById('clock').textContent = koreaTime;
 
             updateSchedule(now);
