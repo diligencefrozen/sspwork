@@ -130,7 +130,14 @@
                 }                
                 // 점심 시간 (11시 30분부터 12시 59분까지)
                 if ((hours > 11 || (hours === 11 && minutes >= 30)) && (hours < 12 || (hours === 12 && minutes < 59))) { 
-                    message = '점심식사 및 휴식';
+                    message = '점심식사 및 휴식 시간입니다. 추천할만한 주변 카페 및 식당에 대한 정보는 아래와 같습니다. :';
+                    scheduleContent += `<li class="schedule-item">1. <a href="https://maps.app.goo.gl/hdkfAMBHXULH6aUr8" target="_blank">의정부지방법원 남양주지원 구내식당</a></li>`;
+                    scheduleContent += `<li class="schedule-item">2. <a href="https://maps.app.goo.gl/ssg2GTM68oZHmT9v9" target="_blank">뚜띠쿠치나</a></li>`;
+                    scheduleContent += `<li class="schedule-item">3. <a href="https://maps.app.goo.gl/LKTJSjkXqJpd9aRs6" target="_blank">우디가</a></li>`;
+                    scheduleContent += `<li class="schedule-item">4. <a href="https://maps.app.goo.gl/igi8GioqeirhbyYt7" target="_blank">삼인커피로스터스</a></li>`;
+                    scheduleContent += `<li class="schedule-item">5. <a href="https://maps.app.goo.gl/E5jVKdCBVQnSBwy76" target="_blank">리틀마리오네트</a></li>`;
+                    scheduleContent += `<li class="schedule-item">6. <a href="https://maps.app.goo.gl/EK3Pu2zZTSZNDb447" target="_blank">테르타스</a></li>`;
+
                 }
                 // 오후 업무 -1 (13시 00분부터 15시 00분까지)
                 if ((hours > 13 || (hours === 13 && minutes >= 00)) && (hours < 15 || (hours === 15 && minutes < 00))) {  
@@ -172,12 +179,14 @@
         if (!scheduleContent && !message) { // scheduleContent와 message 모두 비어있는 경우
             message = "일정이 없습니다. 편히 쉬세요.";
         }
-            
-            document.getElementById('schedule').innerHTML = scheduleContent ? `<ul>${scheduleContent}</ul>` : message;
+        
+        // message가 있으면 항상 message를 출력하고, scheduleContent가 있으면 추가로 출력
+        document.getElementById('schedule').innerHTML = message + (scheduleContent ? `<ul>${scheduleContent}</ul>` : "");
         }
 
         updateClockAndSchedule();
         setInterval(updateClockAndSchedule, 1000);
     </script>
+    
 </body>
 </html>
