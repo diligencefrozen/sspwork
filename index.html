@@ -32,6 +32,28 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             overflow-y: auto; 
         }
+        .schedule-item:hover {
+            transform: scale(1.05); 
+            margin: -1% 0; 
+            transition: transform 0.3s ease-in-out, margin 0.3s ease-in-out; 
+            transform: scale(1.05);
+            padding: 20px; 
+        }
+        .schedule-item::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            bottom: -10px;
+            left: -10px;
+            right: -10px;
+            z-index: -1;
+        }
+
+        .schedule-item:hover::after {
+            background-color: transparent; 
+        }
+
+
         /* 데스크탑 화면에서 너비 조정 */
         @media (min-width: 768px) {
             #schedule {
@@ -45,11 +67,13 @@
         }        
         .schedule-item {
             margin: 5px 0;
-            padding: 10px;
+            padding: 15px;
             list-style-type: none;
             border-left: 3px solid #007bff;
             background-color: #f1f1f1;
             border-radius: 4px;
+            transition: transform 0.5s ease, padding 0.5s ease; 
+            position: relative; 
         }
         #clock {
             font-size: 1.5em;
@@ -62,6 +86,7 @@
             color: #999999;
             font-size: 1em;
         }
+
     </style>
 </head>
 <body>
@@ -196,6 +221,20 @@
 
         updateClockAndSchedule();
         setInterval(updateClockAndSchedule, 1000);
+
+        document.querySelector('#schedule').addEventListener('mouseover', function(e) {
+            if (e.target.classList.contains('schedule-item')) {
+                e.target.style.transform = 'scale(1.05)';
+                e.target.style.padding = '20px';
+            }
+        });
+
+        document.querySelector('#schedule').addEventListener('mouseout', function(e) {
+            if (e.target.classList.contains('schedule-item')) {
+                e.target.style.transform = '';
+                e.target.style.padding = '';
+            }
+        });        
     </script>
     
 </body>
