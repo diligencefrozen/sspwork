@@ -5,9 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="google-site-verification" content="c4eTxK6D1wFIOq01h8LLX02-f44HSO5gXqCsqGhr8AE" />
-    <meta name="description" content="남양주시청 취득세과에 근무하는 사회복무요원의 해야 할 일 목록을 간단하게 확인할 수 있습니다.">
+    <meta name="description" content="남양주시청에 근무하는 사회복무요원의 해야 할 일 목록을 간단하게 확인할 수 있습니다.">
     <meta name="author" content="Diligencefrozen">
-    <title>남양주시청(취득세과):사회복무요원의 일과</title>
+    <title>Namyangju City Hall :SSP's Schedule</title>
     <style>
         body {
             font-family: "Noto Sans KR", sans-serif;
@@ -101,150 +101,144 @@
             <li><a href="https://diligencefrozen.github.io/sspwork/about.html">About</a></li>
             <li><a href="https://github.com/diligencefrozen/sspwork/issues/new">Contact</a></li>
         </ul>
+        <!-- 드롭다운 메뉴 추가 -->
+        <select id="department-select" style="margin-left: 20px; padding: 5px;">
+            <option value="main">메인화면</option>
+
+            <option value="finance01">취득세과</option>
+            <option value="finance02">지역경제과</option>
+            <option value="finance03">일자리정책과</option>
+            <option value="finance04">회계과</option>
+            <option value="finance05">재산관리과</option>
+            <option value="finance06">세정과</option>
+            <option value="finance07">징수과</option>
+            <option value="finance08">위생과</option>
+
+            <option value="plan01">행정지원과</option>
+            <option value="plan02">정책지원과</option>
+            <option value="plan03">의회법무과</option>
+            <option value="plan04">인사과</option>
+            <option value="plan05">예산과</option>
+            <option value="plan05">정보통신과</option>
+        <!-- 다른 옵션들 추가 -->
+    </select>
     </div>
     <h2 id="clock"></h2>
     <p id="client-ip"></p>
     <div id="schedule"></div>
+    
     <script>
-        
-        // IP 정보 가져오기
-        const se = document.createElement('script');
-        se.src = 'https://ipinfo.io?callback=callback';
-        document.body.appendChild(se);
-        document.body.removeChild(se);
+    function updateClockAndSchedule() {
+        const now = new Date();
+        const koreaTimeOptions = {
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            timeZone: 'Asia/Seoul',
+            hour12: false
+        };
 
-        function callback(data) {
-            document.getElementById('client-ip').textContent = data.ip + ' 님의 해야 할 일 목록 입니다.';
-        }
-        // 시간과 일정 업데이트 함수
-        function updateClockAndSchedule() {
-            const now = new Date();
-            const koreaTimeOptions = {
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit',
-                timeZone: 'Asia/Seoul',
-                hour12: false
-            };
-            
-            // `koreaTime`을 `let`으로 선언하여 값을 변경할 수 있도록 함
-            let koreaTime = new Intl.DateTimeFormat('ko-KR', koreaTimeOptions).format(now);
+        let koreaTime = new Intl.DateTimeFormat('ko-KR', koreaTimeOptions).format(now);
+        document.getElementById('clock').textContent = koreaTime;
 
-            // 0시를 '00시'로 표시하기 위한 조건문 추가
-            const hours = now.getHours();
-            if (hours === 0) {
-                koreaTime = koreaTime.replace(/^24/, '00'); // '24'로 시작하는 문자열을 '00'으로 교체
-            }
+        const selectedDepartment = document.getElementById('department-select').value;
+        updateSchedule(now, selectedDepartment);
+    }
 
-            document.getElementById('clock').textContent = koreaTime;
+    function updateSchedule(now, department) {
+        const dayOfWeek = now.getDay(); // 현재 요일을 가져옵니다. (0은 일요일, 6은 토요일)
+        const hours = now.getHours();
+        const minutes = now.getMinutes();
+        let message = '';
+        let scheduleContent = '';
 
-            updateSchedule(now);
-        }
-        
-        function updateSchedule(now) {
-            const dayOfWeek = now.getDay();
-            const hours = now.getHours();
-            const minutes = now.getMinutes();
-            let message = '';
-            let scheduleContent = '';
-            
-            // 쉬는 날 (일요일 = 0, 토요일 = 6)
-            if (dayOfWeek === 0 || dayOfWeek === 6) {
-                message = '오늘은 쉬는 날입니다.';
-            } else {
-                // 출근 시간 (8시 30분 하루 일정 시작)
-                if ((hours > 08 || (hours === 08 && minutes >= 30)) && (hours < 09 || (hours === 09 && minutes < 30))) {                   
-                    scheduleContent += '<li class="schedule-item">1층 우편함에서 신문지와 우편 들고오기</li>';
-                    scheduleContent += '<li class="schedule-item">파쇄기 쓰레기통 및 사무실 쓰레기통 비우기</li>';
-                    scheduleContent += '<li class="schedule-item">커피머신 청소 및 쓰레기 봉지 버리고 오기</li>';
-                    scheduleContent += '<li class="schedule-item">40번 사물함 - 열쇠 11번 (부동산팀 쪽 서랍장 확인.)</li>';
-                    scheduleContent += '<li class="schedule-item">43번 사물함 - 열어 놓은 후, 수신할 우편 담는 통 꺼내놓기</li>';
-                    scheduleContent += '<li class="schedule-item">우편 담는 상자 꺼내기</li>';
-                    scheduleContent += '<li class="schedule-item">대걸레질(선택)</li>';
-                    scheduleContent += '<li class="schedule-item">프린터기 용지 채우기 (민원인용 프린터 및 실내 공용프린터)</li>';
-                    scheduleContent += '<li class="schedule-item">부족한 고지서 및 A4 용지 가져다 놓기 (재고는 1층 창고에 존재함)</li>';
-                    scheduleContent += '<li class="schedule-item">사송 우편 2층 사송우편 발송함에 넣어두기</li>';
-                    scheduleContent += '<li class="schedule-item">2층 취득세과 수령함에 있는 사송우편 가져오기</li>';
-                    scheduleContent += '<li class="schedule-item">부족한 고지서 및 A4 용지 가져다 놓기 (재고는 1층 창고에 존재함)</li>';
-                    // 이하 동일한 방식으로 다른 일정 항목 추가...
-                }
-                // 발송우편 분류 시간 (11시 00분부터 11시 29분까지)
-                if (hours === 11 && minutes < 30) {                     
-                    scheduleContent += '<li class="schedule-item">11시에 발송된 우편 전달 및 서류에 담당 공무원 이름으로 사인 받거나 (자리에 없을 시) 본인이 직접 사인하기 (우편물 수령 확인 대장)</li>';
-                    // 이하 동일한 방식으로 다른 일정 항목 추가...
-                }                
-                // 점심 시간 (11시 30분부터 12시 59분까지)
-                if ((hours > 11 || (hours === 11 && minutes >= 30)) && (hours < 12 || (hours === 12 && minutes < 59))) { 
-                    message = '점심식사 및 휴식 시간입니다. 추천할만한 주변 카페 및 식당에 대한 정보는 아래와 같습니다. :';
-                    scheduleContent += `<li class="schedule-item">1. <a href="https://maps.app.goo.gl/hdkfAMBHXULH6aUr8" target="_blank">의정부지방법원 남양주지원 구내식당</a></li>`;
-                    scheduleContent += `<li class="schedule-item">2. <a href="https://maps.app.goo.gl/ssg2GTM68oZHmT9v9" target="_blank">뚜띠쿠치나</a></li>`;
-                    scheduleContent += `<li class="schedule-item">3. <a href="https://maps.app.goo.gl/LKTJSjkXqJpd9aRs6" target="_blank">우디가</a></li>`;
-                    scheduleContent += `<li class="schedule-item">4. <a href="https://maps.app.goo.gl/igi8GioqeirhbyYt7" target="_blank">삼인커피로스터스</a></li>`;
-                    scheduleContent += `<li class="schedule-item">5. <a href="https://maps.app.goo.gl/E5jVKdCBVQnSBwy76" target="_blank">리틀마리오네트</a></li>`;
-                    scheduleContent += `<li class="schedule-item">6. <a href="https://maps.app.goo.gl/EK3Pu2zZTSZNDb447" target="_blank">테르타스</a></li>`;
-
-                }
-                // 오후 업무 -1 (13시 00분부터 15시 00분까지)
-                if ((hours > 13 || (hours === 13 && minutes >= 00)) && (hours < 15 || (hours === 15 && minutes < 00))) {  
-                    scheduleContent += '<li class="schedule-item">1시부터 사무용품 및 기타 필요한 물품 확인 후 담당 주무관님께 말씀드리기</li>';
-                    scheduleContent += '<li class="schedule-item">(문구용품(고무줄), 우편봉투, 쓰레기봉투, 세단기봉투, 고지서, A4, 프린터 드럼, 토너, 문서보존박스, 문서보존표지, 번호표용지, 물티슈, 휴지, 종이컵) </li>';
-                    scheduleContent += '<li class="schedule-item">드럼은 1층서고에만 있고, 토너는 3층서고, 1층서고에 있으니 3층서고에 없으면 1층서고 확인(1층서고 열쇠 취득세관리팀 팀장님 자리 옆에 있음)</li>';
-                    scheduleContent += '<li class="schedule-item">오후 업무 진행</li>';
-                    // 이하 동일한 방식으로 다른 일정 항목 추가...
-                }
-                // 오후 업무 -2 (15시 00분부터 16시 00분까지)
-                if ((hours > 15 || (hours === 15 && minutes >= 00)) && (hours < 16 || (hours === 16 && minutes < 00))) {  
-                    scheduleContent += '<li class="schedule-item">3시부터 등기 우편과 일반 우편을 다산2동우편취급국으로 가서 부치기</li>';
-                    scheduleContent += '<li class="schedule-item">a. 발송우편-등기우편 -> 발송요청 -> 검수 -> 등기번호등록 -> 발송정보 일괄변경 -> 환부불능 -> 우체국발송(15:28에 수행) -> 다산2동우편취급국</li>';
-                    scheduleContent += '<li class="schedule-item">b. 고지서-지방세 -> 검수 -> 등기번호등록 -> 발송정보 일괄변경 -> 우체국발송(15:28에 수행) -> 다산2동우편취급국</li>';
-                    scheduleContent += '<li class="schedule-item">c. 총 수량을 요금후납우편물발송표에 기록</li>';
-                    scheduleContent += '<li class="schedule-item">일반 우편을 처리할 때는</li>';
-                    scheduleContent += '<li class="schedule-item">a. 소봉투와 대봉투 분류하여 고무줄로 봉인 -> 소봉투 묶음과 대봉투 묶음 각각에 등기/일반 구분을 위한 포스트잇(내용의 예: 일반 7건 or 일반 5, etc) 부착</li>';
-                    scheduleContent += '<li class="schedule-item">b. 총 수량을 요금후납우편물발송표에 기록</li>';
-                    scheduleContent += '<li class="schedule-item">★요금후납우편물발송표 2장 작성</li>';
-                    scheduleContent += '<li class="schedule-item">★등기우편, 일반우편 구분 확실히 하기</li>';
-                    scheduleContent += '<li class="schedule-item">★등기우편은 우편모아 등록순서대로 정리해서 가져가기(일반우편은 순서 상관 없음)</li>';
-                    scheduleContent += '<li class="schedule-item">★요금후납우편물발송표 없으면 프린트하여 담당주사님께 직인 찍어달라고 부탁드리기</li>';
-                    // 이하 동일한 방식으로 다른 일정 항목 추가...
-                }      
-                // 오후 업무 -3 (16시 45분부터 17시 30분까지)
-                if ((hours > 16 || (hours === 16 && minutes >= 45)) && (hours < 17 || (hours === 17 && minutes < 30))) {  
-                    scheduleContent += '<li class="schedule-item">사무실 정리 마무리</li>';
-                    scheduleContent += '<li class="schedule-item">민원대 정리 (번호표 수거 및 바닥 쓰레기 줍기)</li>';
-                    scheduleContent += '<li class="schedule-item">일반쓰레기, 종이류, 세단기 분리수거하기</li>';
-                    scheduleContent += '<li class="schedule-item">★우편, 사송 통 3개 43번 사물함에 넣기</li>';
-                    // 이하 동일한 방식으로 다른 일정 항목 추가...
-                }                   
-                // 퇴근 시간 (17시 30분 하루 일정 종료)
-                if ((hours > 17 || (hours === 17 && minutes >= 30)) && (hours < 18 || (hours === 18 && minutes < 00))) {  
-                    message = '퇴근할 시간';
-                }
-            }
-            
-        if (!scheduleContent && !message) { // scheduleContent와 message 모두 비어있는 경우
-            message = "일정이 없습니다. 편히 쉬세요.";
-        }
-        
-        // message가 있으면 항상 message를 출력하고, scheduleContent가 있으면 추가로 출력
-        document.getElementById('schedule').innerHTML = message + (scheduleContent ? `<ul>${scheduleContent}</ul>` : "");
+        if (dayOfWeek === 2 || dayOfWeek === 6) { // 주말인 경우
+            message = "오늘은 쉬는 날입니다.";
+            document.getElementById('schedule').innerHTML = message;
+            return; // 주말 메시지를 출력하고 함수를 종료합니다.
         }
 
-        updateClockAndSchedule();
-        setInterval(updateClockAndSchedule, 1000);
+        if (department === 'main') {
+            message = "부서를 선택해 일정을 확인해주세요.";
+        } else if (department === 'finance01') {
+            // 현재 시간에 따라 달라지는 취득세과의 일정
+            message = "취득세과 일정입니다:";
 
-        document.querySelector('#schedule').addEventListener('mouseover', function(e) {
-            if (e.target.classList.contains('schedule-item')) {
-                e.target.style.transform = 'scale(1.05)';
-                e.target.style.padding = '20px';
+            // 출근 시간 (8시 30분 하루 일정 시작)
+            if (hours === 8 && minutes >= 30 || hours === 9 && minutes <= 30) {
+                scheduleContent += '<li class="schedule-item">1층 우편함에서 신문지와 우편 들고오기</li>';
+                scheduleContent += '<li class="schedule-item">파쇄기 쓰레기통 및 사무실 쓰레기통 비우기</li>';
+                scheduleContent += '<li class="schedule-item">커피머신 청소 및 쓰레기 봉지 버리고 오기</li>';
+                scheduleContent += '<li class="schedule-item">40번 사물함 - 열쇠 11번 (부동산팀 쪽 서랍장 확인.)</li>';
+                scheduleContent += '<li class="schedule-item">43번 사물함 - 열어 놓은 후, 수신할 우편 담는 통 꺼내놓기</li>';
+                scheduleContent += '<li class="schedule-item">우편 담는 상자 꺼내기</li>';
+                scheduleContent += '<li class="schedule-item">대걸레질(선택)</li>';
+                scheduleContent += '<li class="schedule-item">프린터기 용지 채우기 (민원인용 프린터 및 실내 공용프린터)</li>';
+                scheduleContent += '<li class="schedule-item">부족한 고지서 및 A4 용지 가져다 놓기 (재고는 1층 창고에 존재함)</li>';
+                scheduleContent += '<li class="schedule-item">사송 우편 2층 사송우편 발송함에 넣어두기</li>';
+                scheduleContent += '<li class="schedule-item">2층 취득세과 수령함에 있는 사송우편 가져오기</li>';
+                scheduleContent += '<li class="schedule-item">부족한 고지서 및 A4 용지 가져다 놓기 (재고는 1층 창고에 존재함)</li>';
             }
-        });
+            // 발송우편 분류 시간 (11시 00분부터 11시 29분까지)
+            if (hours === 11 && minutes < 30) {
+                scheduleContent += '<li class="schedule-item">11시에 발송된 우편 전달 및 서류에 담당 공무원 이름으로 사인 받거나 (자리에 없을 시) 본인이 직접 사인하기 (우편물 수령 확인 대장)</li>';
+            }
+            // 점심 시간 (11시 30분부터 12시 59분까지)
+            if ((hours > 11 || (hours === 11 && minutes >= 30)) && (hours < 12 || (hours === 12 && minutes < 59))) {
+                message = '점심식사 및 휴식 시간입니다. 추천할만한 주변 카페 및 식당에 대한 정보는 아래와 같습니다. :';
+                scheduleContent += `<li class="schedule-item">1. <a href="https://maps.app.goo.gl/hdkfAMBHXULH6aUr8" target="_blank">의정부지방법원 남양주지원 구내식당</a></li>`;
+                scheduleContent += `<li class="schedule-item">2. <a href="https://maps.app.goo.gl/ssg2GTM68oZHmT9v9" target="_blank">뚜띠쿠치나</a></li>`;
+                scheduleContent += `<li class="schedule-item">3. <a href="https://maps.app.goo.gl/LKTJSjkXqJpd9aRs6" target="_blank">우디가</a></li>`;
+                scheduleContent += `<li class="schedule-item">4. <a href="https://maps.app.goo.gl/igi8GioqeirhbyYt7" target="_blank">삼인커피로스터스</a></li>`;
+                scheduleContent += `<li class="schedule-item">5. <a href="https://maps.app.goo.gl/E5jVKdCBVQnSBwy76" target="_blank">리틀마리오네트</a></li>`;
+                scheduleContent += `<li class="schedule-item">6. <a href="https://maps.app.goo.gl/EK3Pu2zZTSZNDb447" target="_blank">테르타스</a></li>`;
+            }
+            // 오후 업무 -1 (13시 00분부터 15시 00분까지)
+            if ((hours > 13 || (hours === 13 && minutes >= 00)) && (hours < 15 || (hours === 15 && minutes < 00))) {  
+                scheduleContent += '<li class="schedule-item">1시부터 사무용품 및 기타 필요한 물품 확인 후 담당 주무관님께 말씀드리기</li>';
+                scheduleContent += '<li class="schedule-item">(문구용품(고무줄), 우편봉투, 쓰레기봉투, 세단기봉투, 고지서, A4, 프린터 드럼, 토너, 문서보존박스, 문서보존표지, 번호표용지, 물티슈, 휴지, 종이컵) </li>';
+                scheduleContent += '<li class="schedule-item">드럼은 1층서고에만 있고, 토너는 3층서고, 1층서고에 있으니 3층서고에 없으면 1층서고 확인(1층서고 열쇠 취득세관리팀 팀장님 자리 옆에 있음)</li>';
+                scheduleContent += '<li class="schedule-item">오후 업무 진행</li>';
+            }
+            // 오후 업무 -2 (15시 00분부터 16시 00분까지)
+            if ((hours > 15 || (hours === 15 && minutes >= 00)) && (hours < 16 || (hours === 16 && minutes < 00))) {  
+                scheduleContent += '<li class="schedule-item">3시부터 등기 우편과 일반 우편을 다산2동우편취급국으로 가서 부치기</li>';
+                scheduleContent += '<li class="schedule-item">a. 발송우편-등기우편 -> 발송요청 -> 검수 -> 등기번호등록 -> 발송정보 일괄변경 -> 환부불능 -> 우체국발송(15:28에 수행) -> 다산2동우편취급국</li>';
+                scheduleContent += '<li class="schedule-item">b. 고지서-지방세 -> 검수 -> 등기번호등록 -> 발송정보 일괄변경 -> 우체국발송(15:28에 수행) -> 다산2동우편취급국</li>';
+                scheduleContent += '<li class="schedule-item">c. 총 수량을 요금후납우편물발송표에 기록</li>';
+                scheduleContent += '<li class="schedule-item">일반 우편을 처리할 때는</li>';
+                scheduleContent += '<li class="schedule-item">a. 소봉투와 대봉투 분류하여 고무줄로 봉인 -> 소봉투 묶음과 대봉투 묶음 각각에 등기/일반 구분을 위한 포스트잇(내용의 예: 일반 7건 or 일반 5, etc) 부착</li>';
+                scheduleContent += '<li class="schedule-item">b. 총 수량을 요금후납우편물발송표에 기록</li>';
+                scheduleContent += '<li class="schedule-item">★요금후납우편물발송표 2장 작성</li>';
+                scheduleContent += '<li class="schedule-item">★등기우편, 일반우편 구분 확실히 하기</li>';
+                scheduleContent += '<li class="schedule-item">★등기우편은 우편모아 등록순서대로 정리해서 가져가기(일반우편은 순서 상관 없음)</li>';
+                scheduleContent += '<li class="schedule-item">★요금후납우편물발송표 없으면 프린트하여 담당주사님께 직인 찍어달라고 부탁드리기</li>';
+            }      
+            // 오후 업무 -3 (16시 45분부터 17시 30분까지)
+            if ((hours > 16 || (hours === 16 && minutes >= 45)) && (hours < 17 || (hours === 17 && minutes < 30))) {  
+                scheduleContent += '<li class="schedule-item">사무실 정리 마무리</li>';
+                scheduleContent += '<li class="schedule-item">민원대 정리 (번호표 수거 및 바닥 쓰레기 줍기)</li>';
+                scheduleContent += '<li class="schedule-item">일반쓰레기, 종이류, 세단기 분리수거하기</li>';
+                scheduleContent += '<li class="schedule-item">★우편, 사송 통 3개 43번 사물함에 넣기</li>';
+            } 
+            // 퇴근 시간 (17시 30분 하루 일정 종료)
+            if ((hours > 17 || (hours === 17 && minutes >= 30)) && (hours < 18 || (hours === 18 && minutes < 00))) {   
+                message = '퇴근할 시간';
+                scheduleContent += '<li class="schedule-item">퇴근할 시간입니다.</li>';
+            }
+            // 현재 시간이 위 조건에 해당하지 않을 경우, 일반적인 일정 표시
+            if (scheduleContent === '') {
+                scheduleContent += '<li class="schedule-item">현재 일정이 없습니다. 편히 쉬세요.</li>';
+            }
+        }
+        // 다른 부서에 대한 처리...
+        document.getElementById('schedule').innerHTML = scheduleContent ? `<ul>${message}<br>${scheduleContent}</ul>` : message;
+    }
+    
+    document.getElementById('department-select').addEventListener('change', updateClockAndSchedule);
 
-        document.querySelector('#schedule').addEventListener('mouseout', function(e) {
-            if (e.target.classList.contains('schedule-item')) {
-                e.target.style.transform = '';
-                e.target.style.padding = '';
-            }
-        });        
+    updateClockAndSchedule();
+    setInterval(updateClockAndSchedule, 1000);
     </script>
 
 </body>
