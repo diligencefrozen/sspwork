@@ -152,7 +152,7 @@
         let message = '';
         let scheduleContent = '';
 
-        if (dayOfWeek === 2 || dayOfWeek === 6) { // 주말인 경우
+        if (dayOfWeek === 0 || dayOfWeek === 6) { // 주말인 경우
             message = "오늘은 쉬는 날입니다.";
             document.getElementById('schedule').innerHTML = message;
             return; // 주말 메시지를 출력하고 함수를 종료합니다.
